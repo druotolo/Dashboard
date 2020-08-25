@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Polarworks Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="dashboardStyle.css">
+  <link rel="stylesheet" href="pageStyle.css">
+</head>
+<body>
+<ul>
+  <h1><img src="polarworksWhite.png" width="42" height="42" style:"display: inline-block;">Polarworks</h1>
+  <li><a href="crm.html"><img src="dashboard.png" width="40" height="30" style:"display: inline-block;"> C.R.M</a></li>
+  <li><a href="Dashboard.html"><img src="dashboard.png" width="40" height="30" style:"display: inline-block;"> Dashboard</a></li>
+  <li><a class="active" href="fleet.html"><img src="fleet.png" width="40" height="30" style:"display: inline-block;">  Fleet Management</a></li>
+  <li><a href="robot1.html"><img src="robot.png" width="40" height="30" style:"display: inline-block;">  Robot 1</a></li>
+  <li><a href="robot2.html"><img src="robot.png" width="40" height="30" style:"display: inline-block;">  Robot 2</a></li>
+</ul>
+
+<div style="margin-left:15%;padding:1px 16px;height:1000px;">
+  <h2>Fleet Management</h2>
+  	<div class="general-data">
+	  <div class="numPrograms">
+	  	<div class="imageIcon">
+	  	<img src="program.png" width="55" height="45" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>2</h3>
+	      <p>Active Programs</p>
+	    </div>
+	  </div>
+	  
+	  <div class="numActiveRobots">
+	  	<div class="imageIcon">
+	  	<img src="robot.png" width="60" height="45" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>2</h3>
+	      <p>Active Robots</p>
+	    </div>
+	  </div>
+	  
+	  <div class="avgTimePerSess">
+	  	<div class="imageIcon">
+	  	<img src="clock.png" width="55" height="50" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>30.5 m</h3>
+	      <p>Avg. Time Per Session</p>
+	    </div>
+	  </div>
+	  
+	  <div class="complete">
+	  	<div class="imageIcon">
+	  	<img src="program.png" width="55" height="45" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>24</h3>
+	      <p>Completed Sessions</p>
+	    </div>
+	  </div>
+	  
+	</div> 
+	<div class="graphs">
+       <div class="one"><canvas id="chartCanvas"></canvas></div>
+       <div class="two"><canvas id="myChart1"></canvas></div>
+       <div class="three"><canvas id="myChart2"></canvas></div>
+       <div class="four"><canvas id="myChart3"></canvas></div>
+       <div class="five"><canvas id="myChart4"></canvas></div>
+       <div class="six"><canvas id="myChart5"></canvas></div>
+    </div>
+</div>
+
+<script>
+// Global Options
+    Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontSize = 15;
+    Chart.defaults.global.defaultFontColor = '#777';
+
+//date Line chart
+let ctx = document.getElementById('chartCanvas').getContext('2d');
+
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['0','2','4','6','8','10','12','14','16','18','20','22','24'],
+        datasets: [{
+            label: 'Robot 1',
+            data: [12, 19, 3, 5, 2, 3 ,10, 12, 6, 9, 4, 7,2],
+            backgroundColor: 'rgba(17, 20, 212, 0.6)',
+            borderColor:'#59C6F1',
+            borderWidth: 1
+        },
+        {
+            label: 'Robot 2',
+            data: [7, 19, 3, 1, 6, 3 ,8, 12, 6, 9, 8, 3,10],
+            backgroundColor:'rgba(16, 207, 198, 0.6)',
+            borderColor:'#006BB3',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        fill: false,
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Robot Usage'
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Hours",
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                },
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Usage(%)",
+                }
+            }]
+        }
+    }
+});
+
+let myChart1 = document.getElementById('myChart1').getContext('2d');
+
+let lineChart = new Chart(myChart1, {
+      type: 'line',
+    data: {
+        labels: ['0','2','4','6','8','10','12','14','16','18','20','22','24'],
+        datasets: [
+        {
+            label: 'Controller',
+            data: [17, 9, 13, 11, 16, 13 ,2, 2, 0, 9, 18, 3,10],
+            backgroundColor:'rgba(17, 20, 212, 0.6)',
+            borderColor:'rgba(17, 20, 212, 0.6)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        fill: false,
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Controller Usage'
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Hours",
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                },
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Usage(%)",
+                }
+            }]
+        }
+    }
+    });
+    
+let myChart2 = document.getElementById('myChart2').getContext('2d');
+
+let doughChart = new Chart(myChart2, {
+      type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Tool', 'Wrist 2', 'Wrist 1', 'Elbow', 'Shoulder', 'Base'],
+        datasets:[{
+          label:'Usage (%)',
+          data:[
+            25,
+            10,
+            10,
+            20,
+            10,
+            25
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(189, 212, 17, 0.6)',//pukegreen
+            'rgba(17, 212, 65, 0.6)',//green
+            'rgba(16, 207, 198, 0.6)',//lightblue
+            'rgba(17, 134, 212, 0.6)',//blue
+            'rgba(17, 20, 212, 0.6)',//darkblue
+            'rgba(121, 16, 207, 0.6)'//purple
+          ],
+          borderWidth:1,
+          borderColor:'#000',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Avg. Joint Usage per Session',
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+    
+let myChart3 = document.getElementById('myChart3').getContext('2d');
+
+let radarChart = new Chart(myChart3, {
+      type:'radar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Tool', 'Wrist 2', 'Wrist 1', 'Elbow', 'Shoulder', 'Base'],
+        datasets:[{
+          label:'Usage (%)',
+          data:[
+            25,
+            10,
+            0,
+            20,
+            10,
+            25
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(121, 16, 207, 0.6)',//pukegreen
+            'rgba(17, 212, 65, 0.6)',//green
+            'rgba(16, 207, 198, 0.6)',//lightblue
+            'rgba(17, 134, 212, 0.6)',//blue
+            'rgba(17, 20, 212, 0.6)',//darkblue
+            'rgba(121, 16, 207, 0.6)'//purple
+          ],
+          borderWidth:1,
+          borderColor:'#000',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Total Joint Usage per Day',
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+    
+let myChart4 = document.getElementById('myChart4').getContext('2d');
+
+let horChart = new Chart(myChart4, {
+      type:'horizontalBar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Dani R.', 'Jacob H.R', 'Jakob B.', 'Dan Z.', 'Thomas B.', 'Frank R'],
+        datasets:[{
+          label:'Operators',
+          data:[
+            500,
+            750,
+            820,
+            100,
+            420,
+            1200
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(189, 212, 17, 0.6)',//pukegreen
+            'rgba(17, 212, 65, 0.6)',//green
+            'rgba(16, 207, 198, 0.6)',//lightblue
+            'rgba(17, 134, 212, 0.6)',//blue
+            'rgba(17, 20, 212, 0.6)',//darkblue
+            'rgba(121, 16, 207, 0.6)'//purple
+          ],
+          borderWidth:1,
+          borderColor:'#000',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+      },
+      options: {
+        fill: false,
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Operator Usage'
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Hours",
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                },
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Operator Names",
+                }
+            }]
+        }
+    }
+    });
+let myChart5 = document.getElementById('myChart5').getContext('2d');
+
+let polarChart = new Chart(myChart5, {
+      type:'polarArea', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['#2424-A27', '#4576-B37', '#9675-C23', '#1423-D64', '#3827-E72', '#1547-F92'],
+        datasets:[{
+          label:'Usage (%)',
+          data:[
+            25,
+            10,
+            10,
+            20,
+            10,
+            25
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(189, 212, 17, 0.6)',//pukegreen
+            'rgba(17, 212, 65, 0.6)',//green
+            'rgba(16, 207, 198, 0.6)',//lightblue
+            'rgba(17, 134, 212, 0.6)',//blue
+            'rgba(17, 20, 212, 0.6)',//darkblue
+            'rgba(121, 16, 207, 0.6)'//purple
+          ],
+          borderWidth:1,
+          borderColor:'#000',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Jobs',
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+    
+</script>
+</body>
+</html>

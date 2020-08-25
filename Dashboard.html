@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Polarworks Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="dashboardStyle.css">
+  <link rel="stylesheet" type="text/css" href="fleetStyle.css">
+</head>
+<body>
+<ul>
+  <h1><img src="polarworksWhite.png" width="42" height="42" style:"display: inline-block;">Polarworks</h1>
+  <li><a href="crm.html"><img src="dashboard.png" width="40" height="30" style:"display: inline-block;"> C.R.M</a></li>
+  <li><a class="active"href="#Dashboard"><img src="dashboard.png" width="40" height="30" style:"display: inline-block;"> Dashboard</a></li>
+  <li><a href="fleet.html"><img src="fleet.png" width="40" height="30" style:"display: inline-block;">  Fleet Management</a></li>
+  <li><a href="robot1.html"><img src="robot.png" width="40" height="30" style:"display: inline-block;">  Robot 1</a></li>
+  <li><a href="robot2.html"><img src="robot.png" width="40" height="30" style:"display: inline-block;">  Robot 2</a></li>
+</ul>
+
+<div style="margin-left:15%;padding:1px 16px;height:1000px;">
+  <h2>Dashboard</h2>
+  <div class=flexGrid>
+    <div class="general-data">
+	  <div class="numPrograms">
+	  	<div class="imageIcon">
+	  	<img src="program.png" width="55" height="45" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>2</h3>
+	      <p>Active Programs</p>
+	    </div>
+	  </div>
+	  <div class="numActiveRobots">
+	  	<div class="imageIcon">
+	  	<img src="robot.png" width="60" height="45" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>2</h3>
+	      <p>Active Robots</p>
+	    </div>
+	  </div>
+	  <div class="avgTimePerSess">
+	  	<div class="imageIcon">
+	  	<img src="clock.png" width="55" height="50" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>30.5 m</h3>
+	      <p>Avg. Time Per Session</p>
+	    </div>
+	  </div>
+	  <div class="complete">
+	  	<div class="imageIcon">
+	  	<img src="program.png" width="55" height="45" style:"display: inline-block;">
+	  	</div>
+	    <div class="textIcon">
+	      <h3>24</h3>
+	      <p>Completed Sessions</p>
+	    </div>
+	  </div>
+    </div> 
+    <div class="onlineStatus">
+<table>
+  <tr>
+    <th>Robot Name</th>
+    <th>Program Name</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>UR3 e-series</td>
+    <td>PicknPlace.script</td>
+    <td><img src="greendot.png" width="40" height="30" style:"display: inline-block;">Online</td>
+  </tr>
+  <tr>
+    <td>Cobotta</td>
+    <td>PicknPlace.script</td>
+    <td><img src="reddot.png" width="40" height="30" style:"display: inline-block;">  Offline</td>
+  </tr>
+</table>
+    </div>
+    <div class="graphs">
+       <div class="one"><canvas id="chartCanvas"></canvas></div>
+       <div class="five"><canvas id="myChart4"></canvas></div>
+    </div>
+  </div>
+  <table>
+  <tr>
+    <th>Robot Name</th>
+    <th>Purchase Date</th>
+    <th>Original Price</th>
+    <th>Usage Hours</th>
+  </tr>
+  <tr>
+    <td>UR3 e-series</td>
+    <td>12/20</td>
+    <td>$20,000</td>
+    <td>4,000 hrs</td>
+  </tr>
+  <tr>
+    <td>UR3 e-series</td>
+    <td>5/18</td>
+    <td>$20,000</td>
+    <td>4,000 hrs</td>
+  </tr>
+  <tr>
+    <td>UR5 e-series</td>
+    <td>5/18</td>
+    <td>$30,000</td>
+    <td>1,090 hrs</td>
+  </tr>
+  <tr>
+    <td>Fanuc</td>
+    <td>7/16</td>
+    <td>$50,000</td>
+    <td>50,000 hrs</td>
+  </tr>
+  <tr>
+    <td>Kuka</td>
+    <td>7/16</td>
+    <td>$50,000</td>
+    <td>10,000 hrs</td>
+  </tr>
+</table>
+</div>
+
+<script>
+const ctx = document.getElementById('chartCanvas').getContext('2d');
+var myChart = new Chart(ctx, {
+    type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['UR3e', 'UR3e','UR5e', 'Fanuc','Kuka'],
+        datasets:[{
+          label:'Robots',
+          data:[
+            25,
+            25,
+            10,
+            10,
+            30
+            
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(189, 212, 17, 0.6)',//pukegreen
+            'rgba(16, 207, 198, 0.6)',//lightblue
+            'rgba(17, 134, 212, 0.6)',//blue
+            'rgba(17, 20, 212, 0.6)',//darkblue
+            'rgba(121, 16, 207, 0.6)'//purple
+          ],
+          borderWidth:1,
+          borderColor:'#000',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Robots Usage %',
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+    
+let myChart4 = document.getElementById('myChart4').getContext('2d');
+
+let horChart = new Chart(myChart4, {
+      type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['UR3e', 'Cobotta', 'Kuka', 'ABB', 'UR5e', 'Fanuc'],
+        datasets:[{
+          label:'Original Price-Usage',
+          data:[
+            500,
+            750,
+            820,
+            100,
+            420,
+            1200
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(189, 212, 17, 0.6)',//pukegreen
+            'rgba(17, 212, 65, 0.6)',//green
+            'rgba(16, 207, 198, 0.6)',//lightblue
+            'rgba(17, 134, 212, 0.6)',//blue
+            'rgba(17, 20, 212, 0.6)',//darkblue
+            'rgba(121, 16, 207, 0.6)'//purple
+          ],
+          borderWidth:1,
+          borderColor:'#000',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+      },
+      options: {
+        fill: false,
+        responsive: true,
+        title: {
+            display: true,
+            text: 'ROI'
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Robots in Fleet",
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                },
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Value($)",
+                }
+            }]
+        }
+    }
+    });
+
+let myChart1 = document.getElementById('myChart1').getContext('2d');
+
+let lineChart = new Chart(myChart1, {
+      type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+        datasets:[{
+          label:'Population',
+          data:[
+            617594,
+            181045,
+            153060,
+            106519,
+            105162,
+            95072
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            '#006bb3',
+            
+            /*,
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            '#006bb3'*/
+          ],
+          borderWidth:1,
+          borderColor:'#006bb3',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#006bb3'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Largest Cities In Massachusetts',
+          fontSize:25
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+    
+let myChart2 = document.getElementById('myChart2').getContext('2d');
+
+let doughChart = new Chart(myChart2, {
+      type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+        datasets:[{
+          label:'Population',
+          data:[
+            617594,
+            181045,
+            153060,
+            106519,
+            105162,
+            95072
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)'
+          ],
+          borderWidth:1,
+          borderColor:'#006bb3',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#006bb3'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Largest Cities In Massachusetts',
+          fontSize:25
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+    
+let myChart3 = document.getElementById('myChart3').getContext('2d');
+
+let radarChart = new Chart(myChart3, {
+      type:'radar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+        datasets:[{
+          label:'Population',
+          data:[
+            617594,
+            181045,
+            153060,
+            106519,
+            105162,
+            95072
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            '#006bb3',
+            
+            /*,
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            '#006bb3'*/
+          ],
+          borderWidth:1,
+          borderColor:'#006bb3',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#006bb3'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Largest Cities In Massachusetts',
+          fontSize:25
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+    
+
+let myChart5 = document.getElementById('myChart5').getContext('2d');
+
+let polarChart = new Chart(myChart5, {
+      type:'polarArea', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+        datasets:[{
+          label:'Population',
+          data:[
+            617594,
+            181045,
+            153060,
+            106519,
+            105162,
+            95072
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+            '#006bb3',
+            
+            /*,
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            '#006bb3'*/
+          ],
+          borderWidth:1,
+          borderColor:'#006bb3',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#006bb3'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Largest Cities In Massachusetts',
+          fontSize:25
+        },
+        legend:{
+          display:true,
+          position:'right',
+          labels:{
+            fontColor:'#000'
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+</script>
+
+</body>
+</html>

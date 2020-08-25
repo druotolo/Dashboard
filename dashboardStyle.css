@@ -1,0 +1,43 @@
+<style>
+body {
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15%;
+  background-image: linear-gradient(#006bb3,#002e4d);
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+ul h1 {
+  color: white;
+  font-family:Geneva;
+  text-align: center;
+
+}
+
+li a {
+  display: block;
+  color: #fff;
+  padding: 25px 16px;
+  text-decoration: none;
+  text-align: left;
+  font-family:Geneva;
+  font-size: 15px;
+}
+
+li a.active {
+  background-image: linear-gradient(#80ccff,#1aa3ff);
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-image: linear-gradient(#80ccff,#1aa3ff);
+  color: white;
+}
+</style>
